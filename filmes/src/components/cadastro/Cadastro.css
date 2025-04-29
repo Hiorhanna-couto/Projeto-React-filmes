@@ -19,6 +19,7 @@
  
     max-width: 300px;
     width: 100%;
+    margin-top: 7px;
     border-width:1px ;
     border-style:solid ;
     border-color: #73061B; /*#73061B*/
@@ -31,8 +32,8 @@
 .campos_cadastro{
 
    display: flex;
-   /*margin-top: 60px;*/
-   padding-top: 60px;
+   margin-top: 60px;
+   /* padding-top: 60px; */
    gap: 25px;
 
    align-items: flex-end;
@@ -44,7 +45,7 @@
 .campo_cad_genero select
 {
 border: none;
-border-radius: 6px;
+border-radius: 4px;
 outline: none;
 padding: 0 5px;
 width: 300px;
@@ -52,7 +53,7 @@ height: 30px;
 
 box-shadow: 1px 4px 4px 0px #00000045;
 
-margin-top: 7px;
+/* margin-top: 7px; */
 
 }
 
@@ -74,7 +75,7 @@ margin-top: 7px;
 @media screen and(max-width: 340px) {
     .form_cadastro h1{
 
-        font-size: 20px;
+        font-size: 18px;
     }
 
 

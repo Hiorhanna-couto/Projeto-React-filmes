@@ -1,5 +1,6 @@
 //import { Fragment } from "react"; // vc pode usar (fragmet) ou <> ...</> 
 
+import { Fragment } from "react";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/hearder/Header";
@@ -12,11 +13,17 @@ const CadastroFilme = () => {
 
          <Header/>
          <main>
-            <Cadastro/>
-            <Lista/>
+            <Cadastro 
+              tituloCadastro = "Cadastro de Filme"
+              placeholder = "filme"
+            />
+            <Lista
+             titulolista ="Lista de Filme"
+             visibilidade ="none"
+            />
          </main>
          <Footer/>
-        
+      
      </>
     )
 }

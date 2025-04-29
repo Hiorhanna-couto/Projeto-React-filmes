@@ -24,7 +24,7 @@
 }
 .item_lista img{
 
-height: 30px;
+height: 28px;
 
 }
 .tabela{
@@ -56,10 +56,10 @@ width: 200px;
 
 }
 .item_lista td {
-  padding: 20px 0 5px 0 ;
- text-align: left;
+  padding: 20px 0 10px 0 ;
+ /* text-align: left;
  padding: 10px 10px 10px 0px;
- grid-template-columns: 10ch auto;
+ grid-template-columns: 10ch auto; */
 }
 
 .item_lista{
