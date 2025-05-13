@@ -12,7 +12,7 @@ const Rotas  = () =>{
          <Route path ="/" element = {<Login/>} exact/>
 
           {/*http:localhost:3000/ = > Cadastro de Filme */}
-         <Route path ="/Filme" element ={<CadastroFilme/>}/>
+         <Route path ="/filme" element ={<CadastroFilme/>}/>
 
           {/*http:localhost:3000/ = > Cadastro de Genero */}
          <Route path ="/Genero" element = {<CadastroGenero/>}/>

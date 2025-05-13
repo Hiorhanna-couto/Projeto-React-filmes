@@ -7,24 +7,24 @@ import Header from "../../components/hearder/Header";
 import Lista from "../../components/lista/Lista";
 
 const CadastroFilme = () => {
-    return(
-     <> 
+  return (
+    <>
 
 
-         <Header/>
-         <main>
-            <Cadastro 
-              tituloCadastro = "Cadastro de Filme"
-              placeholder = "filme"
-            />
-            <Lista
-             titulolista ="Lista de Filme"
-             visibilidade ="none"
-            />
-         </main>
-         <Footer/>
-      
-     </>
-    )
+      <Header />
+      <main>
+        <Cadastro
+          tituloCadastro="Cadastro de Filme"
+          placeholder="filme"
+        />
+        <Lista
+          tituloLista="Filmes"
+          nomeGenero="none"
+        />
+      </main>
+      <Footer />
+
+    </>
+  )
 }
- export default CadastroFilme;
+export default CadastroFilme;
