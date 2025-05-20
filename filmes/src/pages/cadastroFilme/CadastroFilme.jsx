@@ -19,7 +19,7 @@ const CadastroFilme = () => {
         />
         <Lista
           tituloLista="Filmes"
-          nomeGenero="none"
+          
         />
       </main>
       <Footer />
