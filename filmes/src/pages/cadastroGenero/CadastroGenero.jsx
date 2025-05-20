@@ -13,165 +13,181 @@ import Lista from "../../components/lista/Lista";
 
 const CadastroGenero = () => {
 
-  //nome do genero 
-  const [genero, setGenero] = useState("");
-  const [listaGenero, setListaGenero] = useState([]);
+    //Só criamos useState quando precisamos guardar uma informação que muda e que o React precisa acompanhar.
+    //Quem eu vou manipular??????
+    const [genero, setGenero] = useState("");
+    const [listaGenero, setListaGenero] = useState([]);
 
-
-  function alertar(icone, mensagem) {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-    });
-    Toast.fire({
-      icon: icone,
-      title: mensagem
-    });
-  }
-
-
-  async function cadastrarGenero(evt) {
-    (evt).preventDefault();
-    //verificar se o input está vindo vazio
-    if (genero.trim() != "") {
-      //try => tentar(o esperado)
-      //catch => lança a exceção
-      try {
-        //cadastrar um gênero: post
-        await api.post("genero", { nome: genero });
-        alertar("success", "Cadastro realizado com sucesso!")
-        setGenero("");
-        listarGenero("");
-        //atualizar minha lista assi, que cadastra um novo 
-      } catch (error) {
-        alertar("error", "Erro! Entre em contato com o suporte!")
-        console.log(error);
-      }
-    } else {
-      alertar("error", "Erro! Preencha o campo")
-    }
-  }
-
-  //síncrono => Acontece simutâneamente
-  //assincrono => Esperar algo/resposta para ir para outro bloco de código. 
-  async function listarGenero() {
-    try {
-      //await -> Aguarde ter uma resp da solicitação
-      const resposta = await api.get("genero");
-      console.log(resposta.data);
-      // console.log(resposta.data[3].idGenero);
-      // console.log(resposta.data[3].nome);
-      setListaGenero(resposta.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  //funcao de excluir o genero ;)
-
-
-  //teste: validar o genero
-  //useEffect(<function>, <dependency>)
-  // useEffect(() => {
-  //     console.log(genero);
-  // },[genero]);
-  //fim do teste
-
-  // Assim que a página renderizar, o método listarGenero() será chamado
-  //() => / e um funcao anonima ou arrow function
-  //[] / dependencia e um array
-
-  async function excluirGenero(id) {
-    // console.log(id);
-
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-success",
-        cancelButton: "btn btn-danger"
-      },
-      buttonsStyling: true
-    });
-    swalWithBootstrapButtons.fire({
-      title: "Voce tem certeza?",
-      text: "Nao sera possivel reverter!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sim",
-      cancelButtonText: "Nao",
-      reverseButtons: true
-    }).then(async(result) => {
-      if (result.isConfirmed) {
- try {
-      await api.delete(`genero/${id.Genero}`)
-       swalWithBootstrapButtons.fire({
-      title: "Deleted!",
-      text: "O genero foi deletado.",
-      icon: "success"
-    });
-      listarGenero();
-    } catch (error) {
-      console.log(error);
-
-    }
-      
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire({
-          title: "Cancelled",
-          text: "Seu genero nao foi excluido:)",
-          icon: "error"
+    function alertar(icone, mensagem) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
         });
-      }
-    });
-   
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
+    }
 
+    // useEffect(()=>{
+    //     alertar("success", "Lista modificada");
+    //     //ao nascer
+    //     //alterada(excluir, editar um item ou adicionar um item)
+    // },[]);
 
+    async function cadastrarGenero(e) {
+        e.preventDefault();
+        //verificar se o input está vindo vazio
+        if (genero.trim() != "") {
+            //try => tentar(o esperado)
+            //catch => lança a exceção
+            try {
+                //cadastrar um gênero: post
+                await api.post("genero", { nome: genero });
+                alertar("success", "Cadastro realizado com sucesso!")
+                setGenero("");
+                //atualiza minha lista assim que cadastrar um novo genero
+                // listarGenero();
+            } catch (error) {
+                alertar("error", "Erro! Entre em contato com o suporte!")
+                console.log(error);
+            }
+        } else {
+            alertar("error", "Erro! Preencha o campo")
+        }
+    }
+    //síncrono => Acontece simutâneamente
+    //assincrono => Esperar algo/resposta para ir para outro bloco de código. 
+    async function listarGenero() {
+        try {
+            //await -> Aguarde ter uma resp da solicitação
+            const resposta = await api.get("genero");
+            // console.log(resposta.data);
+            // console.log(resposta.data[3].idGenero);
+            // console.log(resposta.data[3].nome);
+            setListaGenero(resposta.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //funcao de excluir o genero ;)
+   async function excluirGenero(idGenero) {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger"
+    },
+    buttonsStyling: true
+  });
+
+  const result = await swalWithBootstrapButtons.fire({
+    title: "Você tem certeza?",
+    text: "Não será possível reverter!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sim, deletar!",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await api.delete(`genero/${idGenero}`);
+      swalWithBootstrapButtons.fire(
+        "Deletado!",
+        "O gênero foi deletado com sucesso.",
+        "success"
+      );
+      listarGenero(); // Atualiza a lista após deletar
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Erro!", "Não foi possível deletar o gênero.", "error");
+    }
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    swalWithBootstrapButtons.fire(
+      "Cancelado",
+      "O gênero não foi deletado.",
+      "error"
+    );
   }
+}
 
-  useEffect(() => {
-    listarGenero();
-  }, [listaGenero])
-  // hooks: Effect(efeito a partir de uma alteracao de estado ):efeito  colateral 
-  // funcao : o efeito que queremos que aconteca
-  //
-  return (
-    <>
-      <Header />
-      <main>
-        <Cadastro
-          tituloCadastro="Cadastro de Gênero"
-          visibilidade="none"
-          placeholder="gênero"
+    async function editarGenero(genero) {
+        // console.log(genero);
+        const { value: novoGenero } = await Swal.fire({
+            title: "Modifique seu gênero",
+            input: "text",
+            inputLabel: "Novo gênero",
+            inputValue: genero.nome,
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "O campo não pode estar vazio!";
+                }
+            }
+        });
+        if (novoGenero) {
+            try {
+                // console.log(genero.nome);
+                // console.log(novoGenero);
+                await api.put(`genero/${genero.idGenero}`, {nome: novoGenero});    
+                Swal.fire(`O gênero modificado ${novoGenero}`);
+            } catch (error) {
+                console.log(error); 
+            }
+        }
+    }
 
-          //Atribuindo a função:
-          funcCadastro={cadastrarGenero}
-          //Atribuindo o valor ao input:
-          valorInput={genero}
-          //Atribuindo a função que atualiza o meu genero:
-          setValorInput={setGenero}
-        />
-        <Lista
-          tituloLista="Lista de Gêneros"
-          visibilidade="none"
+    //teste: validar o genero
+    //useEffect(<function>, <dependency>)
+    // useEffect(() => {
+    //     console.log(genero);
+    // },[genero]);
+    //fim do teste
 
-          //atribuir para lista, o meu estado atual:
-          lista={listaGenero}
-          funcConfirmarExclusao={Lixo}
+    // Assim que a página renderizar, o método listarGenero() será chamado
+    useEffect(() => {
+        listarGenero();
+    }, [listaGenero])
 
-        />
-      </main>
-      <Footer />
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <main>
+                <Cadastro
+                    tituloCadastro="Cadastro de Gênero"
+                    visibilidade="none"
+                    placeholder="gênero"
+
+                    //Atribuindo a função:
+                    funcCadastro={cadastrarGenero}
+                    //Atribuindo o valor ao input:
+                    valorInput={genero}
+                    //Atribuindo a função que atualiza o meu genero:
+                    setValorInput={setGenero}
+                />
+                <Lista
+                    tituloLista="Lista de Gêneros"
+                    visibilidade="none"
+
+                    //atribuir para lista, o meu estado atual:
+                    lista={listaGenero}
+
+                    funcExcluir={excluirGenero}
+                    funcEditar={editarGenero}
+                />
+            </main>
+            <Footer />
+        </>
+    )
 }
 
 export default CadastroGenero;
